@@ -1,0 +1,173 @@
+[server]
+host = 0.0.0.0
+port = 7125
+
+[file_manager]
+enable_object_processing = True
+
+[data_store]
+temperature_store_size = 100000
+gcode_store_size = 1000000
+
+[authorization]
+cors_domains = 
+	*.local
+	*.lan
+	*.modem
+	*://*.modem
+	*://*.local
+	*://app.fluidd.xyz
+	*://my.mainsail.xyz
+	*://vpn.ch1pzy.com
+trusted_clients = 
+	quimby.modem
+	wiggum.modem
+	127.0.0.1
+	192.168.0.0/24
+
+[history]
+
+[octoprint_compat]
+
+[webcam Bed]
+location = printer bed
+icon = 
+enabled = True
+service = webrtc-camerastreamer
+target_fps = 15
+target_fps_idle = 5
+stream_url = /webcam2/webrtc
+snapshot_url = /webcam2/?action=snapshot
+flip_horizontal = False
+flip_vertical = False
+rotation = 180
+aspect_ratio = 16:9
+
+[webcam Nozzle]
+location = Print-Head
+icon = 
+enabled = True
+service = webrtc-camerastreamer
+target_fps = 15
+target_fps_idle = 5
+stream_url = /webcam/webrtc
+snapshot_url = http://fluiddpi.modem/webcam/?action=snapshot
+flip_horizontal = False
+flip_vertical = False
+rotation = 0
+aspect_ratio = 16:9
+
+[spoolman]
+server = http://quimby.modem:7912
+sync_rate = 5
+
+[timelapse]
+output_path = ~/printer_data/timelapse/
+frame_path = /tmp/timelapse/printer
+
+[announcements]
+subscriptions = 
+	octoeverywhere
+
+[update_manager]
+refresh_interval = 168
+enable_auto_refresh = True
+
+[update_manager Spoolman]
+type = zip
+channel = stable
+repo = Donkie/Spoolman
+path = ~/Spoolman
+virtualenv = .venv
+requirements = requirements.txt
+persistent_files = 
+	.venv
+	.env
+managed_services = Spoolman
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+install_script = tools/install.sh
+
+[notifier print_error]
+url = ifttt:///nGADbmLd_5hiFNo1iC40sKEerZe5v3-21nd1xJH5s58@sms_message
+events = complete,error,cancelled,paused,
+body = {event_args[1].message}
+attach = http://fluiddpi.modem/webcam/?action=snapshot
+
+[notifier my_telegram_notifier]
+url = ifttt:///nGADbmLd_5hiFNo1iC40sKEerZe5v3-21nd1xJH5s58@sms_message
+events = gcode
+body = {event_message}
+attach = http://fluiddpi.modem/webcam/?action=snapshot
+
+[update_manager led_effect]
+type = git_repo
+path = ~/klipper-led_effect
+origin = https://github.com/julianschill/klipper-led_effect.git
+is_system_service = False
+
+[update_manager LinearMovevementAnalysis]
+type = git_repo
+path = ~/klipper_linear_movement_analysis
+primary_branch = main
+origin = https://github.com/worksasintended/klipper_linear_movement_analysis.git
+install_script = install.sh
+env = ~/klippy-env/bin/python
+requirements = requirements.txt
+managed_services = klipper
+
+[update_manager octoeverywhere]
+type = git_repo
+channel = beta
+path = /home/pi/octoeverywhere
+origin = https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere.git
+env = /home/pi/octoeverywhere-env/bin/python
+requirements = requirements.txt
+install_script = install.sh
+managed_services = 
+	octoeverywhere
+
+[update_manager fluidd]
+type = web
+channel = stable
+repo = fluidd-core/fluidd
+path = ~/fluidd
+
+[update_manager klipper_tmc_autotune]
+type = git_repo
+channel = dev
+path = ~/klipper_tmc_autotune
+origin = https://github.com/andrewmcgr/klipper_tmc_autotune.git
+managed_services = klipper
+primary_branch = main
+install_script = install.sh
+
+[update_manager KlipperScreen]
+type = git_repo
+path = ~/KlipperScreen
+origin = https://github.com/KlipperScreen/KlipperScreen.git
+virtualenv = ~/.KlipperScreen-env
+requirements = scripts/KlipperScreen-requirements.txt
+system_dependencies = scripts/system-dependencies.json
+managed_services = KlipperScreen
+
+[update_manager klipper-backup]
+type = git_repo
+path = ~/klipper-backup
+origin = https://github.com/Staubgeborener/klipper-backup.git
+managed_services = moonraker
+primary_branch = main
+
+[update_manager moonraker-obico]
+type = git_repo
+path = /home/pi/moonraker-obico
+origin = https://github.com/TheSpaghettiDetective/moonraker-obico.git
+env = /home/pi/moonraker-obico/../moonraker-obico-env/bin/python
+requirements = requirements.txt
+install_script = install.sh
+managed_services = 
+	moonraker-obico
+
