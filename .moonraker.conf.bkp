@@ -58,7 +58,7 @@ rotation = 0
 aspect_ratio = 16:9
 
 [spoolman]
-server = http://quimby.modem:7912
+server = http://192.168.0.206:7912
 sync_rate = 5
 
 [timelapse]
