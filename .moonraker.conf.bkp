@@ -85,6 +85,12 @@ persistent_files =
 	.env
 managed_services = Spoolman
 
+[update_manager Katapult]
+type = git_repo
+path = ~/katapult
+origin = https://github.com/Arksine/katapult.git
+is_system_service = False
+
 [update_manager crowsnest]
 type = git_repo
 path = ~/crowsnest
